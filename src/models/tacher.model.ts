@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
-
 import mongoose  from "mongoose";
+// eslint-disable-next-line import/no-unresolved
+import {ProfessionEnum} from '../interface/tacher.interface';
 
 const tacherSchema = new mongoose.Schema(
   {
@@ -15,11 +16,8 @@ const tacherSchema = new mongoose.Schema(
       max: [60,`Must be less then 60, got {age}`],
     },
     professionType: {
-    type: String,
-    enum: {
-      values: ['Math','History','English','geography','Physics'],
-      message: '{VALUE} is not supported' 
-    }
+    type: ProfessionEnum
+   
     },
     idNum: {
         type: Number,
