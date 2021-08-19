@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // eslint-disable-next-line import/no-unresolved
-import  ProfessionEnum  from './students.interfase';
+import  {ProfessionEnum}  from './student.interface';
 
 // Tachers collection:  will contain a list of tachers
 export interface ITacher {

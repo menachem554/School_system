@@ -4,7 +4,7 @@
 /* eslint-disable prettier/prettier */
 import express, { Request, Response } from 'express';
 import Book from '../models/books';
-import {IBook} from '../interface/students.interfase';
+import {IBook} from '../interface/student.interface';
 
 const router = express.Router();
 

@@ -4,7 +4,7 @@
 /* eslint-disable prettier/prettier */
 import express, { Request, Response } from 'express';
 import Author from '../models/author';
-import { IAuthor } from '../interface/tacher.interfase';
+import { IAuthor } from '../interface/tacher.interface';
 
 const router = express.Router();
 

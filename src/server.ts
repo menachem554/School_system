@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+
 import express from 'express';
 import mongoose from 'mongoose';
 import tachers from './routes/tacher';
@@ -17,9 +18,8 @@ db.on('error', (error: Error) => console.error(error));
 db.once('open', () => console.log('Connected to Database'));
 
 app.use(express.json());
-app.use('/books', tachers);
-app.use('/author', students);
-
+app.use('/tacher', tachers);
+app.use('/students', students);
 // Server start
 const port = process.env.SERVER_PORT;
 app.listen(port, () => {
