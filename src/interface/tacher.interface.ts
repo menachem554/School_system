@@ -1,3 +1,7 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable prettier/prettier */
 export enum ProfessionEnum {
   ENGLISH = 'english',
   HISTORY = 'history',

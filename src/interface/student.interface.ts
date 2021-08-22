@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
-export interface IStudent {
+import mongoose from 'mongoose';
+
+export interface IStudent extends mongoose.Document {
   name: String; 
   age: number; 
   averageGrade: number;

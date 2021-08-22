@@ -3,7 +3,7 @@ import mongoose  from "mongoose";
 // eslint-disable-next-line import/no-unresolved
 import {ProfessionEnum} from '../interface/tacher.interface';
 
-const tacherSchema = new mongoose.Schema(
+const TacherSchem = new mongoose.Schema(
   {
     tName: {
       type: String,
@@ -28,4 +28,4 @@ const tacherSchema = new mongoose.Schema(
   { versionKey: false }
 );
 
-export default mongoose.model('tachers', tacherSchema);
+export default mongoose.model('tachers', TacherSchem);

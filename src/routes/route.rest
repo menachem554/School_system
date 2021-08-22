@@ -12,14 +12,14 @@ GET http://localhost:3000/books/pages/250
 
 ###
 
-POST http://localhost:3000/author/newAuthor
+POST http://localhost:4000/api/tacher
 Content-Type: application/json
 
 {
-    "firstName": "Naftaly",
-    "lastName": "Benet",
-    "birthDate": "04/01/1972",
-    "bookList": ["611cdf73d01bfa0d64759655"]
+      "tName": "jhon Cohen",
+      "ages":35,
+      "professionType":"english",
+      "idNum":  1770
 }
 
 ###
@@ -34,3 +34,7 @@ Content-Type: application/json
     "author": "Naftaly Benet ",
     "pagesNumbers":275
 }
+
+###
+
+GET http://localhost:5000/api/tacher
