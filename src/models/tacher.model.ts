@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-import mongoose  from "mongoose";
+import mongoose from 'mongoose';
 // eslint-disable-next-line import/no-unresolved
-import {ProfessionEnum} from '../interface/tacher.interface';
+import { ProfessionEnum } from '../interface/tacher.interface';
 
-const TacherSchem = new mongoose.Schema(
+const TacherSchema = new mongoose.Schema(
   {
     tName: {
       type: String,
@@ -12,20 +12,24 @@ const TacherSchem = new mongoose.Schema(
     age: {
       type: Number,
       required: true,
-      min: [25,`Must be at least 25, got {age}`],
-      max: [60,`Must be less then 60, got {age}`],
+      min: [25, `Must be at least 25, got {age}`],
+      max: [60, `Must be less then 60, got {age}`]
     },
     professionType: {
-    type: ProfessionEnum
-   
+      type: String,
+      enum:  ProfessionEnum 
     },
-    idNum: {
-        type: Number,
-        require: true,
-        unique: true
-      }
+    studentList :[{
+      type : Number,
+      ref: 'students'
+    }],
+    tacherID: {
+      type: Number,
+      require: true,
+      unique: true
+    }
   },
   { versionKey: false }
 );
 
-export default mongoose.model('tachers', TacherSchem);
+export default mongoose.model('tachers', TacherSchema);

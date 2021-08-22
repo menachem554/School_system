@@ -1,0 +1,11 @@
+
+POST http://localhost:5000/api/students/newStudent
+Content-Type: application/json
+
+{
+       "sName": "erp",
+        "age": 12, 
+        "tacherID": 4770,
+        "averageGrade": 56,  
+        "studentID": 10      
+}

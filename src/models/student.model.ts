@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import mongoose from 'mongoose';
 
-const tacherSchema = new mongoose.Schema(
+const StudentSchema = new mongoose.Schema(
   {
     sName: {
       type: String,
@@ -13,15 +13,14 @@ const tacherSchema = new mongoose.Schema(
       min: [12, `Must be at least 12, got {age}`],
       max: [20, `Must be less then 20, got {age}`],
     },
+    tacherID: {
+      type: Number,
+      unique: true,
+    },
     averageGrade: {
       type: Number,
     },
-    tacherID: {
-      type: Number,
-      require: true,
-      unique: true,
-    },
-    studentNum: {
+    studentID: {
       type: Number,
       require: true,
       unique: true,
@@ -30,4 +29,4 @@ const tacherSchema = new mongoose.Schema(
   { versionKey: false }
 );
 
-export default mongoose.model('studens', tacherSchema);
+export default mongoose.model('students', StudentSchema);

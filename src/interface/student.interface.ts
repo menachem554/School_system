@@ -2,11 +2,11 @@
 import mongoose from 'mongoose';
 
 export interface IStudent extends mongoose.Document {
-  name: String; 
+  sName: String; 
   age: number; 
+  tacherID: number; 
   averageGrade: number;
-  tacherID: number;  
-  studentNum: number; 
+  studentID: number; 
 }
 
 
