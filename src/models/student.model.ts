@@ -13,12 +13,9 @@ const StudentSchema = new mongoose.Schema(
       min: [12, `Must be at least 12, got {age}`],
       max: [20, `Must be less then 20, got {age}`],
     },
-    tacherID: {
-      type: Number,
-      unique: true,
-    },
     averageGrade: {
       type: Number,
+      required: true
     },
     studentID: {
       type: Number,

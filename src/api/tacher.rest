@@ -2,15 +2,15 @@ POST http://localhost:5000/api/tachers/newTacher
 Content-Type: application/json
 
 {
-      "tName": "Ctacher",
-      "age":35,
-      "professionType":"math",
-      "studentList": [9,10],
-      "tacherID":  3770
+      "tName": "test",
+      "age":45,
+      "professionType":"physics",
+      "studentList": [1,2,3],
+      "tacherID":  9770
 }
 
 ###
-GET http://localhost:5000/api/tachers/tName/Ctacher
+GET http://localhost:5000/api/tachers/TID?tacherID=1770
 
 ###
 GET http://localhost:5000/api/tachers/tacherID/1770

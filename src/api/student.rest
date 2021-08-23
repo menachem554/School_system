@@ -3,9 +3,16 @@ POST http://localhost:5000/api/students/newStudent
 Content-Type: application/json
 
 {
-       "sName": "erp",
-        "age": 12, 
-        "tacherID": 4770,
-        "averageGrade": 56,  
-        "studentID": 10      
+       "sName": "bodekk",
+        "age": 17, 
+        "averageGrade": 100,  
+        "studentID": 23    
 }
+
+###
+
+GET http://localhost:5000/api/students/SID?studentID=1
+
+###
+
+GET http://localhost:5000/api/students/profession/5
