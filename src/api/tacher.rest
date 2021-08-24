@@ -2,16 +2,31 @@ POST http://localhost:5000/api/tachers/newTacher
 Content-Type: application/json
 
 {
-      "tName": "test",
-      "age":45,
-      "professionType":"physics",
-      "studentList": [1,2,3],
-      "tacherID":  9770
+      "tName": "kile",
+      "age":32,
+      "professionType":"geography",
+      "studentList": [3,8,9,1],
+      "tacherID":  10770
 }
 
 ###
-GET http://localhost:5000/api/tachers/TID?tacherID=1770
+GET http://localhost:5000/api/tachers/TID?tacherID=2770
 
 ###
-GET http://localhost:5000/api/tachers/tacherID/1770
+PUT http://localhost:5000/api/tachers/editTacher?tacherID=10770
+Content-Type: application/json
+
+{
+      "tName": "kile",
+      "age":32,
+      "professionType":"geography",
+      "studentList": [3256,56,23]
+}
+
+
+###
+GET http://localhost:5000/api/tachers/tacherID/5770
+
+###
+GET http://localhost:5000/api/tachers/outsanding
 

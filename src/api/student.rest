@@ -3,16 +3,31 @@ POST http://localhost:5000/api/students/newStudent
 Content-Type: application/json
 
 {
-       "sName": "bodekk",
-        "age": 17, 
-        "averageGrade": 100,  
-        "studentID": 23    
+       "sName": "dan",
+        "age": 18, 
+        "averageGrade": 67,  
+        "studentID": 25   
 }
 
 ###
 
-GET http://localhost:5000/api/students/SID?studentID=1
+GET http://localhost:5000/api/students/SID?studentID=25
+
+###
+PUT http://localhost:5000/api/students/editStudent?studentID=3256
+Content-Type: application/json
+
+{
+       "sName": "dan",
+        "age": 19, 
+        "averageGrade": 78,  
+        "studentID": 25   
+}
 
 ###
 
 GET http://localhost:5000/api/students/profession/5
+
+###
+
+http://localhost:5000/api/students/tacherles

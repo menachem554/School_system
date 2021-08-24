@@ -1,11 +1,11 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-/* eslint-disable prettier/prettier */
 
 import express from 'express';
 import mongoose from 'mongoose';
-import tacherRouter from './routes/tacher';
-import students from './routes/students';
+import tacherRouter from './routes/tacher.router';
+import students from './routes/student.router';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
