@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import mongoose from 'mongoose';
 import { ProfessionEnum } from '../interface/tacher.interface';
 

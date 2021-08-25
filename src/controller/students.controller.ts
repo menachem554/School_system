@@ -1,5 +1,3 @@
-/* eslint-disable prefer-const */
-/* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express';
 import { IStudent } from '../interface/student.interface';
 import { ITacher } from '../interface/tacher.interface';
@@ -146,11 +144,11 @@ export const getTacherlesStudent = async (_req: Request, res: Response) => {
       },
     ]);
 
-    let studentID: number[] = [];
-    let sName: String[] = [];
+    const studentID: number[] = [];
+    const sName: String[] = [];
     let studentList: number[] = [];
-    let allstudentList: number[] = [];
-    let tacherls: String[] = [];
+    const allstudentList: number[] = [];
+    const tacherls: String[] = [];
 
     tacher.forEach((doc) => {
       studentList = doc.studentList;

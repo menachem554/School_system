@@ -1,5 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express';
 import { IStudent } from '../interface/student.interface';
 import { ITacher } from '../interface/tacher.interface';
@@ -235,7 +233,7 @@ export const delStudentFromTacher = async (studentID) => {
     tacherIDs = doc.tacherID;
 
     for (let i: number = 0; i < studentList.length; i += 1) {
-      if (studentID == studentList[i]) {
+      if (studentID === studentList[i]) {
         // eslint-disable-next-line no-await-in-loop
         const del: ITacher = await TacherSchema.updateOne(
           { tacherID: tacherIDs },

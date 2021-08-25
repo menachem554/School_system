@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/no-unresolved */
 import express from 'express';
 import mongoose from 'mongoose';
 import tacherRouter from './routes/tacher.router';
