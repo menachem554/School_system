@@ -1,7 +1,4 @@
 /* eslint-disable eqeqeq */
-/* eslint-disable prefer-const */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-plusplus */
 /* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express';
 import { IStudent } from '../interface/student.interface';
@@ -237,14 +234,13 @@ export const delStudentFromTacher = async (studentID) => {
     studentList = doc.studentList;
     tacherIDs = doc.tacherID;
 
-    for (let i: number = 0; i < studentList.length; i++) {
+    for (let i: number = 0; i < studentList.length; i += 1) {
       if (studentID == studentList[i]) {
         // eslint-disable-next-line no-await-in-loop
-        const del: ITacher = await TacherSchema.findOne({
-          tacherIDs,
-        }).updateOne({
-          $unset: { studentList: studentID },
-        });
+        const del: ITacher = await TacherSchema.updateOne(
+          { tacherID: tacherIDs },
+          { $pull: { studentList: studentList[i] } }
+        );
         console.log(del);
       }
     }
