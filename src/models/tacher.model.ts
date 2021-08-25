@@ -1,6 +1,4 @@
-/* eslint-disable prettier/prettier */
 import mongoose from 'mongoose';
-// eslint-disable-next-line import/no-unresolved
 import { ProfessionEnum } from '../interface/tacher.interface';
 
 const TacherSchema = new mongoose.Schema(

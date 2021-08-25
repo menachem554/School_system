@@ -3,4 +3,7 @@
 node_modules/
 jspm_packages/
 
+# Transpiled files
+dist/
+
 

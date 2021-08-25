@@ -1,7 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable prefer-const */
-/* eslint-disable prettier/prettier */
 import express, { Request, Response } from 'express';
 import { IStudent } from '../interface/student.interface';
 import { ITacher } from '../interface/tacher.interface';
@@ -13,7 +9,7 @@ const router = express.Router();
 // Add Student
 export const postStudent = async (req: Request, res: Response) => {
   const student = new StudentSchema({
-     // get all body Parameters
+    // get all body Parameters
     sName: req.body.sName,
     age: req.body.age,
     averageGrade: req.body.averageGrade,
@@ -116,7 +112,6 @@ export const getStudentProfession = async (req: Request, res: Response) => {
   }
 };
 
-
 // Get all tacherles students
 export const getTacherlesStudent = async (_req: Request, res: Response) => {
   try {
@@ -153,11 +148,11 @@ export const getTacherlesStudent = async (_req: Request, res: Response) => {
     let allstudentList: number[] = [];
     let tacherls: String[] = [];
 
-    tacher.forEach((doc) => {
+     tacher.forEach((doc) => {
       studentList = doc.studentList;
 
       // get the list of students thate have tachers ass arry
-      for (let i: number = 0; i < studentList.length; i+=1) {
+      for (let i: number = 0; i < studentList.length; i += 1) {
         allstudentList.push(studentList[i]);
       }
     });
@@ -168,7 +163,7 @@ export const getTacherlesStudent = async (_req: Request, res: Response) => {
     });
 
     // Fill out the list of tacherles students
-    for (let i: number = 0; i < studentID.length; i+=1) {
+    for (let i: number = 0; i < studentID.length; i += 1) {
       if (!allstudentList.includes(studentID[i])) {
         tacherls.push(sName[i]);
       }

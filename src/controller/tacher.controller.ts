@@ -1,8 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable prefer-const */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable import/no-unresolved */
-
 import express, { Request, Response } from 'express';
 import { IStudent } from '../interface/student.interface';
 import { ITacher } from '../interface/tacher.interface';
@@ -12,7 +7,7 @@ import StudentSchema from '../models/student.model';
 const router = express.Router();
 
 // Add Tacher
-export const postTacher =  async (req: Request, res: Response) => {
+export const postTacher = async (req: Request, res: Response) => {
   // get all body Parameters
   const tacher = new TacherSchema({
     tName: req.body.tName,
@@ -32,7 +27,7 @@ export const postTacher =  async (req: Request, res: Response) => {
 };
 
 // Print one teacher by ID
-export const getTacher =  async (req: Request, res: Response) => {
+export const getTacher = async (req: Request, res: Response) => {
   try {
     const tacher: ITacher = await TacherSchema.findOne({
       tacherID: req.query.tacherID,
@@ -44,7 +39,7 @@ export const getTacher =  async (req: Request, res: Response) => {
 };
 
 // Edit tacher
-export const editTacher =  async (req: Request, res: Response) => {
+export const editTacher = async (req: Request, res: Response) => {
   // Aggregate all ids of the students for validation
   try {
     const student: IStudent[] = await StudentSchema.aggregate([
@@ -65,42 +60,45 @@ export const editTacher =  async (req: Request, res: Response) => {
 
     // check for Duplicates values
     const studentList: number[] = req.body.studentList;
-    let checkDuplicates  = (arry) => new Set(arry).size !== arry.length
+    let checkDuplicates = (arry) => new Set(arry).size !== arry.length;
 
-    if (checkDuplicates(studentList)){
-      res.status(400).send('Error! You are trying to add a duplicate ID');  
-    }
-    else{
+    if (checkDuplicates(studentList)) {
+      res.status(400).send('Error! You are trying to add a duplicate ID');
+    } else {
       // check for unexist ID
-    for (let i: number = 0; i < studentList.length; i += 1) {
-      if (!studentIds.includes(studentList[i])) {
-        res.status(400).send('Error! You are trying to add studentID that is not registered in the system');
-        isGood = false;
-        break;
+      for (let i: number = 0; i < studentList.length; i += 1) {
+        if (!studentIds.includes(studentList[i])) {
+          res
+            .status(400)
+            .send(
+              'Error! You are trying to add studentID that is not registered in the system'
+            );
+          isGood = false;
+          break;
+        }
+      }
+
+      if (isGood) {
+        // Save the changes
+        const tacher: ITacher = await TacherSchema.updateOne(
+          { tacherID: req.query.tacherID },
+          {
+            tName: req.body.tName,
+            age: req.body.age,
+            professionType: req.body.professionType,
+            studentList: req.body.studentList,
+          }
+        );
+        res.status(201).json(tacher);
       }
     }
-
-    if (isGood) {
-      // Save the changes
-      const tacher: ITacher = await TacherSchema.updateOne(
-        { tacherID: req.query.tacherID },
-        {
-          tName: req.body.tName,
-          age: req.body.age,
-          professionType: req.body.professionType,
-          studentList: req.body.studentList,
-        }
-      );
-      res.status(201).json(tacher);
-    }
-  }
   } catch (err: any) {
     res.status(400).json({ message: err.message });
   }
 };
 
 // Delete tacher
-export const delTacher =  async (req: Request, res: Response) => {
+export const delTacher = async (req: Request, res: Response) => {
   try {
     const tacher: ITacher = await TacherSchema.deleteOne({
       tacherID: req.query.tacherID,
@@ -114,7 +112,7 @@ export const delTacher =  async (req: Request, res: Response) => {
 // Get tacher students list (no Query Params here)
 export const getTacherStudents = async (req: Request, res: Response) => {
   try {
-    // Aggregate the students names 
+    // Aggregate the students names
     const tacher: ITacher[] = await TacherSchema.aggregate([
       {
         $match: {
@@ -204,5 +202,24 @@ export const getoutsandingTacher = async (_req: Request, res: Response) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// // Delete student from tacher
+// const delStudent = async () => {
+//   // Aggregate all ids of the students for validation
+//   const student: IStudent[] = await StudentSchema.aggregate([
+//     {
+//       $project: {
+//         studentID: '$studentID',
+//       },
+//     },
+//   ]);
+
+//   const studentIds: number[] = [];
+
+//   // get the ids ass an arry
+//   student.forEach((doc) => {
+//     studentIds.push(doc.studentID);
+//   });
+// };
 
 export default router;

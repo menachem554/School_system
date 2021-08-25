@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import mongoose from 'mongoose';
 
 export interface IStudent extends mongoose.Document {
@@ -7,5 +6,3 @@ export interface IStudent extends mongoose.Document {
   averageGrade: number;
   studentID: number; 
 }
-
-
