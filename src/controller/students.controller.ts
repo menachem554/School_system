@@ -1,8 +1,11 @@
+/* eslint-disable prefer-const */
+/* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express';
 import { IStudent } from '../interface/student.interface';
 import { ITacher } from '../interface/tacher.interface';
 import StudentSchema from '../models/student.model';
 import TacherSchema from '../models/tacher.model';
+import * as valdiat from './tacher.controller';
 
 const router = express.Router();
 
@@ -57,6 +60,7 @@ export const editStudent = async (req: Request, res: Response) => {
 // Delete student
 export const delStudent = async (req: Request, res: Response) => {
   try {
+    valdiat.delStudentFromTacher(req.query.studentID);
     const student: IStudent = await StudentSchema.deleteOne({
       studentID: req.query.studentID,
     });
@@ -148,7 +152,7 @@ export const getTacherlesStudent = async (_req: Request, res: Response) => {
     let allstudentList: number[] = [];
     let tacherls: String[] = [];
 
-     tacher.forEach((doc) => {
+    tacher.forEach((doc) => {
       studentList = doc.studentList;
 
       // get the list of students thate have tachers ass arry

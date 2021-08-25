@@ -1,3 +1,8 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable prefer-const */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-plusplus */
+/* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express';
 import { IStudent } from '../interface/student.interface';
 import { ITacher } from '../interface/tacher.interface';
@@ -5,6 +10,52 @@ import TacherSchema from '../models/tacher.model';
 import StudentSchema from '../models/student.model';
 
 const router = express.Router();
+
+// function for post and edit
+const checkParamters = async (
+  req: Request,
+  res: Response
+): Promise<boolean> => {
+  let isGood: boolean = true;
+  // Aggregate all ids of the students for validation
+  const student: IStudent[] = await StudentSchema.aggregate([
+    {
+      $project: {
+        studentID: '$studentID',
+      },
+    },
+  ]);
+
+  const studentIds: number[] = [];
+
+  // get the ids ass an arry
+  student.forEach((doc) => {
+    studentIds.push(doc.studentID);
+  });
+
+  // check for Duplicates values
+  const { studentList } = req.body;
+  const checkDuplicates = (arry) => new Set(arry).size !== arry.length;
+
+  if (checkDuplicates(studentList)) {
+    res.status(400).send('Error! You are trying to add a duplicate ID');
+    isGood = false;
+  } else {
+    // check for unexist ID
+    for (let i: number = 0; i < studentList.length; i += 1) {
+      if (!studentIds.includes(studentList[i])) {
+        res
+          .status(400)
+          .send(
+            'Error! You are trying to add studentID that is not registered in the system'
+          );
+        isGood = false;
+        break;
+      }
+    }
+  }
+  return isGood;
+};
 
 // Add Tacher
 export const postTacher = async (req: Request, res: Response) => {
@@ -19,8 +70,10 @@ export const postTacher = async (req: Request, res: Response) => {
 
   // Save the new tacher
   try {
-    const newtacher = await tacher.save();
-    res.status(201).json(newtacher);
+    if (await checkParamters(req, res)) {
+      const newtacher = await tacher.save();
+      res.status(201).json(newtacher);
+    }
   } catch (err: any) {
     res.status(400).json({ message: err.message });
   }
@@ -40,57 +93,19 @@ export const getTacher = async (req: Request, res: Response) => {
 
 // Edit tacher
 export const editTacher = async (req: Request, res: Response) => {
-  // Aggregate all ids of the students for validation
   try {
-    const student: IStudent[] = await StudentSchema.aggregate([
-      {
-        $project: {
-          studentID: '$studentID',
-        },
-      },
-    ]);
-
-    const studentIds: number[] = [];
-    let isGood: boolean = true;
-
-    // get the ids ass an arry
-    student.forEach((doc) => {
-      studentIds.push(doc.studentID);
-    });
-
-    // check for Duplicates values
-    const studentList: number[] = req.body.studentList;
-    let checkDuplicates = (arry) => new Set(arry).size !== arry.length;
-
-    if (checkDuplicates(studentList)) {
-      res.status(400).send('Error! You are trying to add a duplicate ID');
-    } else {
-      // check for unexist ID
-      for (let i: number = 0; i < studentList.length; i += 1) {
-        if (!studentIds.includes(studentList[i])) {
-          res
-            .status(400)
-            .send(
-              'Error! You are trying to add studentID that is not registered in the system'
-            );
-          isGood = false;
-          break;
+    if (await checkParamters(req, res)) {
+      // Save the changes
+      const tacher: ITacher = await TacherSchema.updateOne(
+        { tacherID: req.query.tacherID },
+        {
+          tName: req.body.tName,
+          age: req.body.age,
+          professionType: req.body.professionType,
+          studentList: req.body.studentList,
         }
-      }
-
-      if (isGood) {
-        // Save the changes
-        const tacher: ITacher = await TacherSchema.updateOne(
-          { tacherID: req.query.tacherID },
-          {
-            tName: req.body.tName,
-            age: req.body.age,
-            professionType: req.body.professionType,
-            studentList: req.body.studentList,
-          }
-        );
-        res.status(201).json(tacher);
-      }
+      );
+      res.status(201).json(tacher);
     }
   } catch (err: any) {
     res.status(400).json({ message: err.message });
@@ -203,23 +218,36 @@ export const getoutsandingTacher = async (_req: Request, res: Response) => {
   }
 };
 
-// // Delete student from tacher
-// const delStudent = async () => {
-//   // Aggregate all ids of the students for validation
-//   const student: IStudent[] = await StudentSchema.aggregate([
-//     {
-//       $project: {
-//         studentID: '$studentID',
-//       },
-//     },
-//   ]);
+// Delete student from tacher
+export const delStudentFromTacher = async (studentID) => {
+  let studentList: number[] = [];
+  let tacherIDs: number = 0;
+  // let temp : number = 0;
 
-//   const studentIds: number[] = [];
+  // Aggregate list of all students with tachers
+  const tacher: ITacher[] = await TacherSchema.aggregate([
+    {
+      $project: {
+        tacherID: '$tacherID',
+        studentList: '$studentList',
+      },
+    },
+  ]);
 
-//   // get the ids ass an arry
-//   student.forEach((doc) => {
-//     studentIds.push(doc.studentID);
-//   });
-// };
+  tacher.forEach(async (doc) => {
+    studentList = doc.studentList;
+    tacherIDs = doc.tacherID;
 
+    for (let i: number = 0; i < studentList.length; i++) {
+      if (studentID == studentList[i]) {
+        // temp = studentList[i];
+        // eslint-disable-next-line no-await-in-loop
+        const del: ITacher = await TacherSchema.find({ tacherIDs }).updateOne({
+          $unset: { studentList: studentList[i] },
+        });
+        console.log(del);
+      }
+    }
+  });
+};
 export default router;

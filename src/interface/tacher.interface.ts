@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 export enum ProfessionEnum {
   ENGLISH = 'english',
   HISTORY = 'history',

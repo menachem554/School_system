@@ -22,6 +22,7 @@ module.exports = {
         camelcase: false,
         noplusplus: false,
         endOfLine: 'auto',
+        importnoextraneousdependencies: ['error', { devDependencies: true }],
       },
     ],
     'no-console': 0,

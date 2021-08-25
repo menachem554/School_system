@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-unresolved */
 import express from 'express';
 import mongoose from 'mongoose';
 import tacherRouter from './routes/tacher.router';
@@ -19,7 +21,7 @@ db.once('open', () => console.log('Connected to Database'));
 
 app.use(express.json());
 app.use('/api/tachers', tacherRouter);
-app.use('/api/students',students);
+app.use('/api/students', students);
 
 const port = process.env.SERVER_PORT as string;
 app.listen(port, () => {

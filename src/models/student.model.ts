@@ -14,7 +14,7 @@ const StudentSchema = new mongoose.Schema(
     },
     averageGrade: {
       type: Number,
-      required: true
+      required: true,
     },
     studentID: {
       type: Number,
