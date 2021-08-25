@@ -222,7 +222,6 @@ export const getoutsandingTacher = async (_req: Request, res: Response) => {
 export const delStudentFromTacher = async (studentID) => {
   let studentList: number[] = [];
   let tacherIDs: number = 0;
-  // let temp : number = 0;
 
   // Aggregate list of all students with tachers
   const tacher: ITacher[] = await TacherSchema.aggregate([
@@ -240,10 +239,11 @@ export const delStudentFromTacher = async (studentID) => {
 
     for (let i: number = 0; i < studentList.length; i++) {
       if (studentID == studentList[i]) {
-        // temp = studentList[i];
         // eslint-disable-next-line no-await-in-loop
-        const del: ITacher = await TacherSchema.find({ tacherIDs }).updateOne({
-          $unset: { studentList: studentList[i] },
+        const del: ITacher = await TacherSchema.findOne({
+          tacherIDs,
+        }).updateOne({
+          $unset: { studentList: studentID },
         });
         console.log(del);
       }
