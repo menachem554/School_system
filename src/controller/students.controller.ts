@@ -57,8 +57,9 @@ export const editStudent = async (req: Request, res: Response) => {
 
 // Delete student
 export const delStudent = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.query.studentID as string, 10);
   try {
-    valdiat.delStudentFromTacher(req.query.studentID);
+    valdiat.delStudentFromTacher(id);
     const student: IStudent = await StudentSchema.deleteOne({
       studentID: req.query.studentID,
     });

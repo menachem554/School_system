@@ -52,6 +52,40 @@ const checkParamters = async (
   return isGood;
 };
 
+// validate the profession type of tacher
+const valProfession = async (
+  _req: Request,
+  res: Response,
+  profession: String,
+  tacherID: number
+): Promise<boolean> => {
+  let isGood: boolean = true;
+  let professionType: String = '';
+  let tacherIDs: number = 0;
+
+  // Aggregate list of all professionType
+  const tacher: ITacher[] = await TacherSchema.aggregate([
+    {
+      $project: {
+        professionType: '$professionType',
+        tacherID: '$tacherID',
+      },
+    },
+  ]);
+
+  tacher.forEach(async (doc) => {
+    professionType = doc.professionType;
+    tacherIDs = doc.tacherID;
+
+    if (profession === professionType && tacherID !== tacherIDs) {
+      res.status(500).send(`'The profession you are trying to enter
+       is already taken by another teacher`);
+      isGood = false;
+    }
+  });
+  return isGood;
+};
+
 // Add Tacher
 export const postTacher = async (req: Request, res: Response) => {
   // get all body Parameters
@@ -66,8 +100,17 @@ export const postTacher = async (req: Request, res: Response) => {
   // Save the new tacher
   try {
     if (await checkParamters(req, res)) {
-      const newtacher = await tacher.save();
-      res.status(201).json(newtacher);
+      if (
+        await valProfession(
+          req,
+          res,
+          req.body.professionType,
+          req.body.tacherID
+        )
+      ) {
+        const newtacher = await tacher.save();
+        res.status(201).json(newtacher);
+      }
     }
   } catch (err: any) {
     res.status(400).json({ message: err.message });
@@ -88,19 +131,22 @@ export const getTacher = async (req: Request, res: Response) => {
 
 // Edit tacher
 export const editTacher = async (req: Request, res: Response) => {
+  const tId: number = parseInt(req.query.tacherID as string, 10);
   try {
     if (await checkParamters(req, res)) {
-      // Save the changes
-      const tacher: ITacher = await TacherSchema.updateOne(
-        { tacherID: req.query.tacherID },
-        {
-          tName: req.body.tName,
-          age: req.body.age,
-          professionType: req.body.professionType,
-          studentList: req.body.studentList,
-        }
-      );
-      res.status(201).json(tacher);
+      if (await valProfession(req, res, req.body.professionType, tId)) {
+        // Save the changes
+        const tacher: ITacher = await TacherSchema.updateOne(
+          { tacherID: req.query.tacherID },
+          {
+            tName: req.body.tName,
+            age: req.body.age,
+            professionType: req.body.professionType,
+            studentList: req.body.studentList,
+          }
+        );
+        res.status(201).json(tacher);
+      }
     }
   } catch (err: any) {
     res.status(400).json({ message: err.message });
@@ -214,7 +260,7 @@ export const getoutsandingTacher = async (_req: Request, res: Response) => {
 };
 
 // Delete student from tacher
-export const delStudentFromTacher = async (studentID) => {
+export const delStudentFromTacher = async (studentID: number) => {
   let studentList: number[] = [];
   let tacherIDs: number = 0;
 
@@ -244,4 +290,5 @@ export const delStudentFromTacher = async (studentID) => {
     }
   });
 };
+
 export default router;
