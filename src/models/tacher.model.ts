@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { ProfessionEnum } from '../interface/tacher.interface';
+import { ProfessionEnum } from '../interfaces/tacher.interface';
 
 const TacherSchema = new mongoose.Schema(
   {

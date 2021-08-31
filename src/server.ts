@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import tacherRouter from './routes/tacher.router';
-import students from './routes/student.router';
+import studentrouter from './routes/student.router';
 
 require('dotenv').config();
 
@@ -19,7 +19,7 @@ db.once('open', () => console.log('Connected to Database'));
 
 app.use(express.json());
 app.use('/api/tachers', tacherRouter);
-app.use('/api/students', students);
+app.use('/api/students', studentrouter);
 
 const port = process.env.SERVER_PORT as string;
 app.listen(port, () => {

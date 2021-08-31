@@ -6,7 +6,6 @@ export enum ProfessionEnum {
   GEOGRAPHY = 'geography',
 }
 export interface ITacher {
-  averageGrade: any;
   tName: String;
   age: Number;
   professionType: ProfessionEnum;
