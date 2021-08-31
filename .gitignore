@@ -5,5 +5,6 @@ jspm_packages/
 
 # Transpiled files
 dist/
+.dev
 
 
